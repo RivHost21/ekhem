@@ -1,177 +1,102 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Undangan Pernikahan Riva & Pasangan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      height: 100%;
-      font-family: 'Roboto', sans-serif;
-      overflow-x: hidden;
-      background: #ffeef0;
-    }
-
-    /* Background animation */
-    .background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      overflow: hidden;
-      z-index: -1;
-    }
-    .background span {
-      position: absolute;
-      display: block;
-      width: 20px;
-      height: 20px;
-      background: rgba(214, 51, 108, 0.4);
-      animation: float 20s linear infinite;
-      border-radius: 50%;
-    }
-    @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-    }
-
-    /* Invitation card */
-    .invitation {
-      position: relative;
-      max-width: 550px;
-      margin: 50px auto;
-      background: rgba(255,255,255,0.95);
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      text-align: center;
-      padding: 50px 30px;
-      animation: fadeIn 2s ease forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .invitation h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3.5rem;
-      color: #d6336c;
-      margin-bottom: 10px;
-      animation: pop 1s ease forwards;
-    }
-    @keyframes pop {
-      0% { transform: scale(0); }
-      100% { transform: scale(1); }
-    }
-
-    .invitation h2 {
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #555;
-      margin-bottom: 30px;
-    }
-
-    .details {
-      text-align: left;
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 30px;
-    }
-    .details p { margin-bottom: 10px; }
-
-    .rsvp {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 30px;
-      background: #d6336c;
-      color: #fff;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .rsvp:hover { background: #b52a59; }
-
-    .footer {
-      margin-top: 25px;
-      font-size: 0.9rem;
-      color: #888;
-    }
-
-    /* Countdown */
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      color: #d6336c;
-    }
-    .countdown div { text-align: center; }
-    .countdown div span { display: block; font-size: 2rem; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan Riva & Pasangan</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body,html{height:100%;font-family:'Roboto',sans-serif;overflow:hidden;}
+  body{background:#ffeef0;}
+  .page{
+    position:absolute;
+    top:0;left:0;width:100%;height:100%;
+    display:flex;justify-content:center;align-items:center;
+    flex-direction:column;
+    transition: all 1s ease;
+    padding:20px;
+    text-align:center;
+  }
+  .hidden{opacity:0;pointer-events:none;transform:scale(0.95);}
+  h1{font-family:'Great Vibes',cursive;color:#d6336c;font-size:4rem;margin-bottom:10px;animation:pop 1s ease forwards;}
+  h2{font-size:1.2rem;color:#555;margin-bottom:30px;}
+  button{
+    padding:12px 30px;
+    background:#d6336c;color:white;border:none;border-radius:50px;
+    font-weight:bold;cursor:pointer;transition:0.3s;font-size:1rem;
+  }
+  button:hover{background:#b52a59;}
+  @keyframes pop{0%{transform:scale(0);}100%{transform:scale(1);}}
+  .details{font-size:1rem;line-height:1.6;margin-bottom:20px;text-align:left;max-width:450px;}
+  .countdown{display:flex;justify-content:center;gap:15px;font-weight:bold;font-size:1.2rem;color:#d6336c;margin-bottom:30px;}
+  .countdown div{text-align:center;} .countdown div span{display:block;font-size:2rem;}
+</style>
 </head>
 <body>
 
-  <div class="background">
-    <!-- Generate floating circles -->
-    <span style="left:10%; width:25px; height:25px; animation-duration:15s;"></span>
-    <span style="left:30%; width:15px; height:15px; animation-duration:20s;"></span>
-    <span style="left:50%; width:20px; height:20px; animation-duration:25s;"></span>
-    <span style="left:70%; width:30px; height:30px; animation-duration:18s;"></span>
-    <span style="left:90%; width:10px; height:10px; animation-duration:22s;"></span>
+<!-- Halaman Sambutan -->
+<div class="page" id="welcome">
+  <h1>Selamat Datang</h1>
+  <h2>Di undangan pernikahan Riva & Pasangan</h2>
+  <button onclick="goToPage('main')">Buka Undangan</button>
+</div>
+
+<!-- Halaman Utama -->
+<div class="page hidden" id="main">
+  <h1>Riva & Pasangan</h1>
+  <h2>Mengundang Anda di hari bahagia kami</h2>
+
+  <div class="countdown" id="countdown">
+    <div><span id="days">0</span>Hari</div>
+    <div><span id="hours">0</span>Jam</div>
+    <div><span id="minutes">0</span>Menit</div>
+    <div><span id="seconds">0</span>Detik</div>
   </div>
 
-  <div class="invitation">
-    <h1>Riva & Pasangan</h1>
-    <h2>Mengundang Anda untuk hadir di hari bahagia kami</h2>
-
-    <div class="countdown" id="countdown">
-      <div><span id="days">0</span>Hari</div>
-      <div><span id="hours">0</span>Jam</div>
-      <div><span id="minutes">0</span>Menit</div>
-      <div><span id="seconds">0</span>Detik</div>
-    </div>
-
-    <div class="details">
-      <p><strong>Hari/Tanggal:</strong> Sabtu, 10 Juni 2026</p>
-      <p><strong>Waktu:</strong> 10.00 WIB – Selesai</p>
-      <p><strong>Tempat:</strong> Gedung Serba Guna Sukamaju, Desa Sukamaju, Kec. Cilawu, Garut</p>
-      <p><strong>Dress Code:</strong> Smart Casual / Elegan</p>
-    </div>
-
-    <a class="rsvp" href="tel:0812xxxxxxxx">RSVP</a>
-
-    <div class="footer">
-      ✨ “Dua hati, satu cinta, selamanya.” ✨
-    </div>
+  <div class="details">
+    <p><strong>Hari/Tanggal:</strong> Sabtu, 10 Juni 2026</p>
+    <p><strong>Waktu:</strong> 10.00 WIB – Selesai</p>
+    <p><strong>Tempat:</strong> Gedung Serba Guna Sukamaju, Desa Sukamaju, Kec. Cilawu, Garut</p>
+    <p><strong>Dress Code:</strong> Smart Casual / Elegan</p>
   </div>
 
-  <script>
-    // Countdown
-    const countDownDate = new Date("Jun 10, 2026 10:00:00").getTime();
-    const x = setInterval(function() {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
+  <button onclick="goToPage('story')">Lanjutkan</button>
+</div>
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000*60*60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000*60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+<!-- Halaman Cerita/Istimewa -->
+<div class="page hidden" id="story">
+  <h1>Cerita Kami</h1>
+  <h2>Dua hati yang dipertemukan takdir, akhirnya bersatu selamanya</h2>
+  <p class="details">Kami ingin membagikan kebahagiaan ini dengan kalian semua. Terima kasih atas doa dan restu yang diberikan.</p>
+  <button onclick="goToPage('main')">Kembali ke Undangan</button>
+</div>
 
-      document.getElementById("days").innerText = days;
-      document.getElementById("hours").innerText = hours;
-      document.getElementById("minutes").innerText = minutes;
-      document.getElementById("seconds").innerText = seconds;
+<script>
+  function goToPage(pageId){
+    document.querySelectorAll('.page').forEach(p=>{
+      p.classList.add('hidden');
+    });
+    document.getElementById(pageId).classList.remove('hidden');
+  }
 
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("countdown").innerHTML = "Hari H Telah Tiba!";
-      }
-    }, 1000);
-  </script>
+  // Countdown
+  const countDownDate = new Date("Jun 10, 2026 10:00:00").getTime();
+  setInterval(function(){
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+
+    const days = Math.floor(distance / (1000*60*60*24));
+    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
+  },1000);
+</script>
 
 </body>
 </html>
