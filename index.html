@@ -7,56 +7,55 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
-  body,html{height:100%;font-family:'Roboto',sans-serif;overflow:hidden;}
-  body{background:#ffeef0;position:relative;}
-
-  /* Background animasi bunga */
-  .background{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:-1;}
+  body,html{height:100%;font-family:'Roboto',sans-serif;overflow-x:hidden;background:#fff5f7;scroll-behavior:smooth;}
+  
+  /* Background animasi kelap-kelip bunga */
+  .background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;}
   .background span{
-    position:absolute;display:block;
+    position:absolute;
     width:15px;height:15px;
-    background:rgba(214,51,108,0.5);
+    background:rgba(214,51,108,0.4);
     border-radius:50%;
-    animation:float 20s linear infinite;
+    animation:float 25s linear infinite;
   }
   @keyframes float{
     0%{transform:translateY(100vh) rotate(0deg);opacity:1;}
     100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}
   }
 
-  /* Halaman */
-  .page{
-    position:absolute;top:0;left:0;width:100%;height:100%;
-    display:flex;justify-content:center;align-items:center;
-    flex-direction:column;
-    transition: all 1s ease;
-    padding:20px;
-    text-align:center;
-    background: rgba(255,255,255,0.9);
+  /* Tab style */
+  .tabs{display:flex;justify-content:center;margin-top:20px;gap:15px;}
+  .tabs button{
+    padding:10px 20px;
+    border:none;border-radius:20px;
+    background:#d6336c;color:white;font-weight:bold;cursor:pointer;transition:0.3s;
   }
-  .hidden{opacity:0;pointer-events:none;transform:scale(0.95);}
+  .tabs button:hover{background:#b52a59;}
+  .tabs button.active{background:#ff4081;}
 
-  h1{font-family:'Great Vibes',cursive;color:#d6336c;font-size:4rem;margin-bottom:10px;animation:pop 1s ease forwards;}
-  h2{font-size:1.2rem;color:#555;margin-bottom:30px;}
-  p{margin-bottom:15px;}
+  /* Halaman / Section */
+  .section{display:none;min-height:100vh;padding:40px 20px;text-align:center;flex-direction:column;align-items:center;justify-content:center;display:flex;}
+  .section.active{display:flex;}
 
-  button{
+  h1{font-family:'Great Vibes',cursive;color:#d6336c;font-size:4rem;margin-bottom:10px;opacity:0;transition:1s;}
+  h2{font-size:1.2rem;color:#555;margin-bottom:30px;opacity:0;transition:1s;}
+  p{margin-bottom:15px;opacity:0;transition:1s;}
+
+  button.rsvp{
     padding:12px 30px;
     background:#d6336c;color:white;border:none;border-radius:50px;
-    font-weight:bold;cursor:pointer;transition:0.3s;font-size:1rem;
+    font-weight:bold;cursor:pointer;transition:0.3s;font-size:1rem;opacity:0;
   }
-  button:hover{background:#b52a59;}
-
-  @keyframes pop{0%{transform:scale(0);}100%{transform:scale(1);}}
+  button.rsvp:hover{background:#b52a59;}
 
   /* Countdown */
   .countdown{display:flex;justify-content:center;gap:15px;font-weight:bold;font-size:1.2rem;color:#d6336c;margin-bottom:30px;}
   .countdown div{text-align:center;} .countdown div span{display:block;font-size:2rem;}
 
-  /* Galeri */
-  .gallery{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
-  .gallery img{width:120px;height:80px;border-radius:10px;object-fit:cover;transition:0.3s;}
-  .gallery img:hover{transform:scale(1.1);}
+  /* Galeri paralaks */
+  .gallery{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;perspective:1000px;margin-top:20px;}
+  .gallery img{width:120px;height:80px;border-radius:10px;object-fit:cover;transition: transform 0.5s ease, box-shadow 0.5s ease;}
+  .gallery img:hover{transform:rotateY(15deg) scale(1.1);box-shadow:0 15px 30px rgba(0,0,0,0.3);}
 </style>
 </head>
 <body>
@@ -66,80 +65,109 @@
 
 <!-- Background animasi -->
 <div class="background">
-  <span style="left:10%; width:20px; height:20px; animation-duration:15s;"></span>
-  <span style="left:30%; width:15px; height:15px; animation-duration:20s;"></span>
-  <span style="left:50%; width:25px; height:25px; animation-duration:25s;"></span>
-  <span style="left:70%; width:30px; height:30px; animation-duration:18s;"></span>
-  <span style="left:90%; width:10px; height:10px; animation-duration:22s;"></span>
+  <span style="left:5%; width:20px; height:20px; animation-duration:15s;"></span>
+  <span style="left:25%; width:15px; height:15px; animation-duration:20s;"></span>
+  <span style="left:45%; width:25px; height:25px; animation-duration:22s;"></span>
+  <span style="left:65%; width:30px; height:30px; animation-duration:18s;"></span>
+  <span style="left:85%; width:10px; height:10px; animation-duration:25s;"></span>
 </div>
 
-<!-- Halaman Sambutan -->
-<div class="page" id="welcome">
-  <h1>Selamat Datang</h1>
-  <h2>Di undangan pernikahan Riva & Pasangan</h2>
-  <button onclick="goToPage('main')">Buka Undangan</button>
+<!-- Tab navigasi -->
+<div class="tabs">
+  <button class="tabBtn active" data-tab="welcome">Sambutan Islami</button>
+  <button class="tabBtn" data-tab="main">Undangan</button>
+  <button class="tabBtn" data-tab="story">Cerita Kita</button>
+  <button class="tabBtn" data-tab="gallery">Galeri</button>
+  <button class="tabBtn" data-tab="rsvp">RSVP</button>
 </div>
 
-<!-- Halaman Utama -->
-<div class="page hidden" id="main">
+<!-- Sections -->
+<div class="section active" id="welcome">
+  <h1>Assalamu’alaikum Warahmatullahi Wabarakatuh</h1>
+  <h2>Menyambut hari bahagia Riva & Pasangan</h2>
+  <p>Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami. Semoga menjadi hari penuh berkah.</p>
+</div>
+
+<div class="section" id="main">
   <h1>Riva & Pasangan</h1>
   <h2>Mengundang Anda di hari bahagia kami</h2>
-
   <div class="countdown" id="countdown">
     <div><span id="days">0</span>Hari</div>
     <div><span id="hours">0</span>Jam</div>
     <div><span id="minutes">0</span>Menit</div>
     <div><span id="seconds">0</span>Detik</div>
   </div>
-
   <p><strong>Hari/Tanggal:</strong> Sabtu, 10 Juni 2026</p>
   <p><strong>Waktu:</strong> 10.00 WIB – Selesai</p>
   <p><strong>Tempat:</strong> Gedung Serba Guna Sukamaju, Desa Sukamaju, Kec. Cilawu, Garut</p>
   <p><strong>Dress Code:</strong> Smart Casual / Elegan</p>
-
-  <button onclick="goToPage('story')">Lanjutkan Cerita Kami</button>
 </div>
 
-<!-- Halaman Cerita & Galeri -->
-<div class="page hidden" id="story">
-  <h1>Cerita Kami</h1>
+<div class="section" id="story">
+  <h1>Cerita Kita</h1>
   <h2>Dua hati yang dipertemukan takdir, akhirnya bersatu selamanya</h2>
-  <p>Terima kasih atas doa dan restu yang diberikan. Mari rayakan kebahagiaan ini bersama kami.</p>
+  <p>Perjalanan kami dimulai dari pertemuan sederhana, hingga akhirnya hari bahagia ini tiba. Terima kasih atas doa dan restu yang diberikan.</p>
+</div>
 
+<div class="section" id="gallery">
+  <h1>Galeri Prewedding</h1>
   <div class="gallery">
     <img src="https://source.unsplash.com/200x150/?love,couple" alt="Prewedding 1">
     <img src="https://source.unsplash.com/200x150/?wedding" alt="Prewedding 2">
     <img src="https://source.unsplash.com/200x150/?romance" alt="Prewedding 3">
   </div>
+</div>
 
-  <button onclick="goToPage('main')">Kembali ke Undangan</button>
+<div class="section" id="rsvp">
+  <h1>RSVP</h1>
+  <p>Silakan klik tombol berikut untuk konfirmasi kehadiran melalui WhatsApp:</p>
+  <button class="rsvp" onclick="openWhatsApp()">RSVP via WhatsApp</button>
 </div>
 
 <script>
-  function goToPage(pageId){
-    document.querySelectorAll('.page').forEach(p=>{
-      p.classList.add('hidden');
+  // Tab navigasi
+  const tabButtons = document.querySelectorAll('.tabBtn');
+  const sections = document.querySelectorAll('.section');
+  tabButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabButtons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.getAttribute('data-tab');
+      sections.forEach(s=>{
+        if(s.id===target) s.classList.add('active');
+        else s.classList.remove('active');
+      });
+      animateText(target);
     });
-    document.getElementById(pageId).classList.remove('hidden');
+  });
+
+  // Animasi teks
+  function animateText(sectionId){
+    const section = document.getElementById(sectionId);
+    section.querySelectorAll('h1,h2,p,button').forEach((el,i)=>{
+      el.style.opacity = 0;
+      setTimeout(()=>{el.style.opacity=1;}, i*400);
+    });
   }
+
+  animateText('welcome');
 
   // Countdown
   const countDownDate = new Date("Jun 10, 2026 10:00:00").getTime();
-  setInterval(function(){
+  setInterval(()=>{
     const now = new Date().getTime();
     const distance = countDownDate - now;
-
-    const days = Math.floor(distance / (1000*60*60*24));
-    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-    const seconds = Math.floor((distance % (1000*60)) / 1000);
-
-    document.getElementById("days").innerText = days;
-    document.getElementById("hours").innerText = hours;
-    document.getElementById("minutes").innerText = minutes;
-    document.getElementById("seconds").innerText = seconds;
+    document.getElementById("days").innerText = Math.floor(distance / (1000*60*60*24));
+    document.getElementById("hours").innerText = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+    document.getElementById("minutes").innerText = Math.floor((distance % (1000*60*60))/(1000*60));
+    document.getElementById("seconds").innerText = Math.floor((distance % (1000*60))/1000);
   },1000);
+
+  // RSVP WhatsApp
+  function openWhatsApp(){
+    window.open('https://wa.me/62812xxxxxxxx?text=Halo,%20saya%20ingin%20mengonfirmasi%20kehadiran%20di%20pernikahan%20Riva%20&%20Pasangan','_blank');
+  }
 </script>
 
 </body>
-</html>
+   </html>
